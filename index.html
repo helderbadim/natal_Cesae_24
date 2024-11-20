@@ -5,13 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="Favicon/faviconV2.png">
     <title>Boas Festas!</title>
 </head>
 
 <body>
-    <audio autoplay loop>
-        <source src="../Música/8bit.mp3">
+    <audio id="background-music" loop>
+        <source src="Música/8bit.mp3" type="audio/mpeg">
     </audio>
+
+    <!-- Speaker and Mute Icons -->
+    <div class="audio-icon" id="audio-control">
+        <img src="Icons/mute.png" alt="Mute Icon" id="mute-icon" class="audio-icon-image">
+        <img src="Icons/speaker-filled-audio-tool.png" alt="Speaker Icon" id="speaker-icon"
+            class="audio-icon-image hidden">
+    </div>
+
     <div class="main-div">
         <div class="image-container">
             <img src="Imagens/Gif 1.png" alt="Image 1" class="image-1">
@@ -19,6 +28,32 @@
         </div>
     </div>
     <p id="by">Eduardo Leça | Hélder Badim | Patrícia Nogueira | Sofia Santos</p>
+
+    <script>
+        const audio = document.getElementById('background-music');
+        const audioControl = document.getElementById('audio-control');
+        const speakerIcon = document.getElementById('speaker-icon');
+        const muteIcon = document.getElementById('mute-icon');
+
+        //A música não toca inicialmente
+        let isPlaying = false; //usamos uma variável let porque vai ser updated cada vez que carregamos no botão
+        audio.pause(); //é um built-in method do audio pelo que não precisamos defini-la
+        muteIcon.classList.remove('hidden'); //removemos a class hidden do mute icon o que faz com que ele seja displayed
+        speakerIcon.classList.add('hidden'); // adicionarmos a classe hidden ao speaker o que faz com que o atributo da classe .hidden seja ativado (display: none;)
+
+        audioControl.addEventListener('click', () => { //definimos que o envento que vai dar trigger na função é o click
+            if (isPlaying) {//se esta condição for verdadeira quando o botão é clicado o audio é muted e a classe .hidden vai transitar do botão muted para o speaker.
+                audio.pause();
+                speakerIcon.classList.add('hidden');
+                muteIcon.classList.remove('hidden');
+            } else { //caso contrario o audio toca, e a classe hidden ai transitar do botão speaker para o muted.
+                audio.play();
+                muteIcon.classList.add('hidden');
+                speakerIcon.classList.remove('hidden');
+            }
+            isPlaying = !isPlaying; //cada vez que carregamos no botão, o valor de isPlaying é atualizado para o seu inverso, sou seja, se isPlayging é inicialmente igual a false, quando carregamos no botão isPlaying = notfalse (true), pelo que a variável isPlaying é agora true. 
+        });
+    </script>
 </body>
 
 </html>
